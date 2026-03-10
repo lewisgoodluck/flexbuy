@@ -1,0 +1,39 @@
+services:
+  # ---------------- Postgres ----------------
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: flex
+      POSTGRES_PASSWORD: 321flex
+      POSTGRES_DB: flexbuy
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - flexnet
+
+  # ---------------- Flexbuy App ----------------
+  flexbuy-app:
+    build: .
+    container_name: flexbuy-app
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/flexbuy
+      SPRING_DATASOURCE_USERNAME: flex
+      SPRING_DATASOURCE_PASSWORD: 321flex
+    ports:
+      - "8080:8080"
+    networks:
+      - flexnet
+
+volumes:
+  postgres_data:
+
+networks:
+  flexnet:
+    driver: bridge
