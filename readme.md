@@ -37,7 +37,7 @@ A modern **e-commerce REST API** built with **Spring Boot 3**, **PostgreSQL**, a
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/techforcetz/flexbuy.git
+git clone https://github.com/lewisgoodluck/flexbuy
 cd flexbuy
 
 # 2. Build the application
